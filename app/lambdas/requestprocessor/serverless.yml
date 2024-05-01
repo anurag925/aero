@@ -1,0 +1,58 @@
+service: requestprocessor
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueAttributes
+      Resource:
+        - ${self:custom.inputQueue.arn}
+        - ${self:custom.deadLetterQueue.arn}
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource:
+        - ${self:custom.outputQueue.arn}
+
+functions:
+  processMessages:
+    handler: bin/main
+    events:
+      - sqs:
+          arn: ${self:custom.inputQueue.arn}
+          batchSize: 10
+          maximumBatchingWindow: 60
+
+custom:
+  inputQueue:
+    name: ${self:service}-input-queue
+    arn: !GetAtt InputQueue.Arn
+  outputQueue:
+    name: ${self:service}-output-queue
+    arn: !GetAtt OutputQueue.Arn
+  deadLetterQueue:
+    name: ${self:service}-deadletter-queue
+    arn: !GetAtt DeadLetterQueue.Arn
+
+resources:
+  Resources:
+    InputQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.inputQueue.name}
+        RedrivePolicy:
+          deadLetterTargetArn: ${self:custom.deadLetterQueue.arn}
+          maxReceiveCount: 3
+    OutputQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.outputQueue.name}
+    DeadLetterQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.deadLetterQueue.name}
