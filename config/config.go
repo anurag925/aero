@@ -5,6 +5,6 @@ type secret struct {
 }
 
 type setting struct {
-	TestConfig string `yaml:"test_config"`
+	TestConfig string `yaml:"test_config" default:"abc"`
 	Env        string `yaml:"env"`
 }

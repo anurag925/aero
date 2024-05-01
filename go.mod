@@ -4,6 +4,7 @@ go 1.21.5
 
 require (
 	github.com/a-h/templ v0.2.598
+	github.com/creasty/defaults v1.7.0
 	github.com/labstack/gommon v0.4.2
 	github.com/uptrace/bun v1.1.16
 )

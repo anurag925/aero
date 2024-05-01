@@ -8,6 +8,7 @@ import (
 
 	"github.com/anurag925/aero/core/helpers"
 	v10env "github.com/caarlos0/env/v10"
+	"github.com/creasty/defaults"
 	_ "github.com/joho/godotenv/autoload"
 	"gopkg.in/yaml.v3"
 )
@@ -84,6 +85,10 @@ func loadConfigs() {
 	if err := v10env.Parse(&secrets); err != nil {
 		slog.Error("unable to load secrets from .env", slog.Any("error", err))
 		helpers.DoPanic("unable to load secrets from .env")
+	}
+	if err := defaults.Set(&settings); err != nil {
+		slog.Error("unable to load default credentials", slog.Any("error", err))
+		helpers.DoPanic("unable to load default credentials")
 	}
 	settingsFile, err := settingsDir.ReadFile(fmt.Sprintf("credentials/%s.yml", env))
 	if err != nil {
