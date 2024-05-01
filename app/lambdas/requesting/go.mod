@@ -1,4 +1,4 @@
-module requestprocessor
+module requesting
 
 go 1.22.2
 

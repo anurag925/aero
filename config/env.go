@@ -40,6 +40,7 @@ func Env(initEnv ...Environment) Environment {
 		} else if len(initEnv) == 0 {
 			env = Development
 		} else {
+			slog.Info("setting env", slog.Any("env", initEnv[0]))
 			env = initEnv[0]
 		}
 	})
@@ -71,17 +72,18 @@ var (
 	settingsDir embed.FS // loading the settings file into the binary so that it can be used
 )
 
-func Secrets() secret {
+func Secrets() *secret {
 	configOnce.Do(loadConfigs)
-	return secrets
+	return &secrets
 }
 
-func Settings() setting {
+func Settings() *setting {
 	configOnce.Do(loadConfigs)
-	return settings
+	return &settings
 }
 
 func loadConfigs() {
+	slog.Info("loading configs for ", "env", env)
 	if err := v10env.Parse(&secrets); err != nil {
 		slog.Error("unable to load secrets from .env", slog.Any("error", err))
 		helpers.DoPanic("unable to load secrets from .env")

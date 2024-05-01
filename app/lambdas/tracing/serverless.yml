@@ -1,4 +1,4 @@
-service: requestprocessor
+service: tracing
 
 provider:
   name: aws

@@ -1,7 +1,8 @@
 package config
 
 type secret struct {
-	DBUrl string `env:"DB_URL" envDefault:"mysql://root:@tcp(localhost:3306)/mf_development?parseTime=true"`
+	JwtSecret string `env:"JWT_SECRET" envDefault:"secret"`
+	DBUrl     string `env:"DB_URL" envDefault:"mysql://root:@tcp(localhost:3306)/mf_development?parseTime=true"`
 }
 
 type setting struct {

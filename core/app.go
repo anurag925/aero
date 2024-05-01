@@ -50,10 +50,23 @@ func Script() application {
 	return app
 }
 
+func Test() application {
+	appOnce.Do(func() {
+		config.Env(config.Test, config.Development)
+		slog.Info("The app env is ", "env", config.Env())
+		app.logger = initializers.InitLogger()
+	})
+	return app
+}
+
 func Server() *echo.Echo {
 	return App().server
 }
 
 func DB() *bun.DB {
 	return App().db
+}
+
+func L() *slog.Logger {
+	return App().logger
 }
