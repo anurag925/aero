@@ -1,0 +1,12 @@
+[
+  {
+    "method": "POST",
+    "path": "/users/login",
+    "name": "github.com/anurag925/aero/app/handlers/api/v1.(*usersHandler).login-fm"
+  },
+  {
+    "method": "POST",
+    "path": "/users/register",
+    "name": "github.com/anurag925/aero/app/handlers/api/v1.(*usersHandler).register-fm"
+  }
+]

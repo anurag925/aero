@@ -1,10 +1,10 @@
-package jwt_test
+package tokens_test
 
 import (
 	"testing"
 
 	"github.com/anurag925/aero/core"
-	"github.com/anurag925/aero/lib/utils/jwt"
+	"github.com/anurag925/aero/lib/utils/tokens"
 	gojwt "github.com/golang-jwt/jwt"
 )
 
@@ -13,13 +13,13 @@ func TestEncodeDecode(t *testing.T) {
 	payload := gojwt.MapClaims{"user_id": 123, "username": "test_user"}
 
 	// Encode the payload
-	tokenString, err := jwt.Encode(payload)
+	tokenString, err := tokens.EncodeJwt(payload)
 	if err != nil {
 		t.Errorf("Error encoding JWT: %v", err)
 	}
 
 	// Decode the token
-	decodedPayload, err := jwt.Decode(tokenString)
+	decodedPayload, err := tokens.DecodeJwt(tokenString)
 	if err != nil {
 		t.Errorf("Error decoding JWT: %v", err)
 	}

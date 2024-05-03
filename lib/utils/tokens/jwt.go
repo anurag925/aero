@@ -1,4 +1,4 @@
-package jwt
+package tokens
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 
 var secretKey = []byte(config.Secrets().JwtSecret)
 
-func Encode(payload jwt.MapClaims) (string, error) {
+func EncodeJwt(payload jwt.MapClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
 	signedToken, err := token.SignedString(secretKey)
 	if err != nil {
@@ -18,7 +18,7 @@ func Encode(payload jwt.MapClaims) (string, error) {
 	return signedToken, nil
 }
 
-func Decode(tokenString string) (jwt.MapClaims, error) {
+func DecodeJwt(tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})

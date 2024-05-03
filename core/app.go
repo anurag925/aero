@@ -52,7 +52,7 @@ func Script() application {
 
 func Test() application {
 	appOnce.Do(func() {
-		config.Env(config.Test, config.Development)
+		config.Env(config.Test)
 		slog.Info("The app env is ", "env", config.Env())
 		app.logger = initializers.InitLogger()
 	})
