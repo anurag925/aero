@@ -1,12 +1,22 @@
 [
   {
+    "method": "GET",
+    "path": "/up",
+    "name": "github.com/anurag925/aero/app/routes.Init.func1"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/users/:id",
+    "name": "github.com/anurag925/aero/app/handlers/api/v1.(*usersHandler).show-fm"
+  },
+  {
     "method": "POST",
-    "path": "/users/login",
+    "path": "/api/v1/users/login",
     "name": "github.com/anurag925/aero/app/handlers/api/v1.(*usersHandler).login-fm"
   },
   {
     "method": "POST",
-    "path": "/users/register",
+    "path": "/api/v1/users/register",
     "name": "github.com/anurag925/aero/app/handlers/api/v1.(*usersHandler).register-fm"
   }
 ]

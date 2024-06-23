@@ -24,7 +24,7 @@ func main() {
 	// Start server
 	go func() {
 		if err := core.Server().Start(fmt.Sprintf(":%d", *flags.Port)); err != nil && err != http.ErrServerClosed {
-			slog.Error("shutting down the server")
+			slog.Error("shutting down the server", err)
 			panic("unable to start the server")
 		}
 	}()

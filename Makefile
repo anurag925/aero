@@ -40,16 +40,13 @@ migrate_version:
 # these needs update in case of new project
 generate_models:
 	### Extra options for tables-to-go
-  # host of database (default "127.0.0.1") -h string
-	# password of database -p string
-	# user of database -u string
-	# port of database -port
+	# -p ${DB_PASSWORD}
 	mkdir -p app/models/new_gen
-	tables-to-go -v -t mysql -d aero_development  -u root -tags-no-db -pn models -fn-format s -of app/models/new_gen
+	tables-to-go -v -t mysql -h ${DB_HOST} -port ${DB_PORT} -d ${DB_NAME}  -u ${DB_USER} -tags-no-db -pn models -fn-format s -of app/models/new_gen
 	gomodifytags -all  -add-tags json -w -dir app/models/new_gen
 	# copy the required model in the model directory and then delete new_gen
 
 schema_dump:
 	# Options that can be provided
 	# mysqldump -h yourhostnameorIP -u root -p --no-data dbname > schema.sql
-	mysqldump -u root --no-data --dump-date aero_development > db/schema.sql
+	mysqldump -h ${DB_HOST} -u ${DB_USER} -p --no-data --dump-date ${DB_NAME} > db/schema.sql

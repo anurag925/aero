@@ -20,5 +20,5 @@ func (h *v1ApplicationHandler) Index(c echo.Context) error {
 }
 
 func (h *v1ApplicationHandler) Group() *echo.Group {
-	return h.group
+	return h.group.Group("api/v1")
 }

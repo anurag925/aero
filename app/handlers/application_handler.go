@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"context"
+
 	"github.com/labstack/echo/v4"
 )
 
@@ -14,4 +16,8 @@ func NewApplicationHandler(group *echo.Group) *ApplicationHandler {
 
 func (h *ApplicationHandler) Group() *echo.Group {
 	return h.group
+}
+
+func (h *ApplicationHandler) Ctx(c echo.Context) context.Context {
+	return c.Request().Context()
 }

@@ -1,4 +1,4 @@
-package repositories
+package services
 
 import (
 	"context"
@@ -6,6 +6,6 @@ import (
 	"github.com/anurag925/aero/app/models"
 )
 
-type UsersRepository interface {
+type UsersService interface {
 	FindUserById(ctx context.Context, id int64) (models.User, error)
 }

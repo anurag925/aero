@@ -1,4 +1,4 @@
 package services
 
-type ApplicationService struct {
+type applicationService struct {
 }
