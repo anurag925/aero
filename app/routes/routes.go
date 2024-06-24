@@ -25,10 +25,10 @@ func Init() {
 	applicationController := handlers.NewApplicationHandler(group)
 
 	// all controllers
-	v1ApplicationController := v1.NewV1ApplicationHandler(applicationController)
+	v1ApplicationController := v1.NewV1ApplicationHandler(*applicationController)
 
 	// this is an example of dependency injection
-	v1UsersHandler := v1.NewUsersHandler(v1ApplicationController, impl.NewUsersService(mysql.NewUsersRepository(core.DB())))
+	v1UsersHandler := v1.NewUsersHandler(*v1ApplicationController, impl.NewUsersService(mysql.NewUsersRepository(core.DB())))
 	v1UsersHandler.Routes()
 	printRoutes(server)
 }

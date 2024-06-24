@@ -7,11 +7,11 @@ import (
 )
 
 type v1ApplicationHandler struct {
-	*handlers.ApplicationHandler
+	handlers.ApplicationHandler
 	group *echo.Group
 }
 
-func NewV1ApplicationHandler(app *handlers.ApplicationHandler) *v1ApplicationHandler {
+func NewV1ApplicationHandler(app handlers.ApplicationHandler) *v1ApplicationHandler {
 	return &v1ApplicationHandler{app, app.Group()}
 }
 

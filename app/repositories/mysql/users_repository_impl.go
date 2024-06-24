@@ -13,9 +13,9 @@ type usersRepositoryImpl struct {
 	db *bun.DB
 }
 
-var _ repositories.UsersRepository = (*usersRepositoryImpl)(nil)
+var _ repositories.Users = (*usersRepositoryImpl)(nil)
 
-func NewUsersRepository(db *bun.DB) repositories.UsersRepository {
+func NewUsersRepository(db *bun.DB) repositories.Users {
 	return &usersRepositoryImpl{db}
 }
 

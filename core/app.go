@@ -10,13 +10,15 @@ import (
 	"github.com/anurag925/aero/lib/utils/asynqwrapper"
 	"github.com/labstack/echo/v4"
 	"github.com/uptrace/bun"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type application struct {
-	logger *slog.Logger
-	server *echo.Echo
-	db     *bun.DB
-	worker *asynqwrapper.TaskClient
+	logger  *slog.Logger
+	server  *echo.Echo
+	db      *bun.DB
+	worker  *asynqwrapper.TaskClient
+	mongodb *mongo.Client
 }
 
 var (
@@ -24,43 +26,47 @@ var (
 	appOnce sync.Once
 )
 
+func (app *application) init() {
+	configLogger()
+	app.logger = initializers.InitLogger()
+	app.db = initializers.InitDB()
+	app.server = initializers.InitServer()
+	mongo, err := initializers.InitMongoDB()
+	if err != nil {
+		panic(fmt.Sprintf("unable to start mongodb %+v", err))
+	}
+	app.mongodb = mongo
+	worker, err := initializers.InitAsynq()
+	if err != nil {
+		panic(fmt.Sprintf("unable to start asynq worker %+v", err))
+	}
+	app.worker = worker
+}
+
 func App() application {
 	appOnce.Do(func() {
-		configLogger()
-		app.logger = initializers.InitLogger()
-		app.db = initializers.InitDB()
-		app.server = initializers.InitServer()
+		app.init()
 	})
 	return app
 }
 
 func Script() application {
 	appOnce.Do(func() {
-		configLogger()
-		app.logger = initializers.InitLogger()
-		app.db = initializers.InitDB()
+		app.init()
 	})
 	return app
 }
 
 func Test() application {
 	appOnce.Do(func() {
-		configLogger()
-		app.logger = initializers.InitLogger()
+		app.init()
 	})
 	return app
 }
 
 func AsynqWorker() application {
 	appOnce.Do(func() {
-		configLogger()
-		app.logger = initializers.InitLogger()
-		app.db = initializers.InitDB()
-		worker, err := initializers.InitAsynq()
-		if err != nil {
-			panic(fmt.Sprintf("unable to start asynq worker %+v", err))
-		}
-		app.worker = worker
+		app.init()
 	})
 	return app
 }
@@ -79,6 +85,10 @@ func L() *slog.Logger {
 
 func TaskClient() *asynqwrapper.TaskClient {
 	return App().worker
+}
+
+func MongoDB() *mongo.Client {
+	return App().mongodb
 }
 
 func configLogger() {

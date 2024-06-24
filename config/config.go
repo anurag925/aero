@@ -4,6 +4,10 @@ type secret struct {
 	JwtSecret string `env:"JWT_SECRET" envDefault:"secret"`
 	DBUrl     string `env:"DB_URL" envDefault:"mysql://root:@tcp(localhost:3306)/mf_development?parseTime=true"`
 
+	// mongo_db
+	MongoDBUrl  string `env:"MONGO_DB_URL"`
+	MongoDBName string `env:"MONGO_DB_NAME"`
+
 	// worker redis
 	WorkerRedisPassword string `env:"WORKER_REDIS_PASSWORD"`
 	WorkerRedisPort     int    `env:"WORKER_REDIS_PORT"`

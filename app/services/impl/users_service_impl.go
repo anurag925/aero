@@ -9,12 +9,12 @@ import (
 )
 
 type usersServiceImpl struct {
-	usersRepo repositories.UsersRepository
+	usersRepo repositories.Users
 }
 
 var _ services.UsersService = (*usersServiceImpl)(nil)
 
-func NewUsersService(usersRepo repositories.UsersRepository) *usersServiceImpl {
+func NewUsersService(usersRepo repositories.Users) *usersServiceImpl {
 	return &usersServiceImpl{
 		usersRepo: usersRepo,
 	}
